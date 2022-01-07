@@ -1,0 +1,88 @@
+.read{
+    width:100%;
+    height: 100%;
+    display: flex;
+    position: relative;
+    background: rgba(0,0,0,.5);
+    overflow-y: hidden;
+    .pdf-box {
+       width:100%;
+       height: 100vh;
+       position: relative;
+       background: #fff;
+       .react-pdf__Document {
+        width:100%;
+        height: 100%;
+        overflow: scroll;
+       position: relative;
+        .react-pdf__Page{
+            width:100%;
+            >.react-pdf__Page__svg {
+                height: 100% !important;
+                width:100% !important;
+                left:0 !important;
+                top: 0 !important;
+                z-index:1 !important;
+            }
+            >.react-pdf__Page__textContent{
+             left:0 !important;
+             top: -3px!important;
+             transform: translate(0,0) !important;
+             z-index: 99 !important;
+             ::selection{
+                 color: #fff;
+                 background: black;
+             }
+            }
+        }
+    }
+    }
+    .right{
+        height: 100%;
+        flex:1;
+        overflow: hidden;
+        .ant-card{
+            width:100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            
+            .pancel-header-box{
+                width:100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 10%;
+                
+            }
+            .ant-card-body{
+                flex:1;
+                overflow-y: scroll;
+                .ant-collapse-content-box{
+                    button{
+                        width:5vw;
+                        margin:1%;
+                    }
+                }
+                
+            }
+            
+        }
+        // .el-table__body tr.current-row>td{
+        //     background:skyblue;
+        // }
+        .table-title{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-right: 10%;
+           .title-left {
+               font-size: 18px;
+             span{
+                 margin: 0 10px;
+                 color: orange;
+             }
+           }
+        }
+    }
+}
