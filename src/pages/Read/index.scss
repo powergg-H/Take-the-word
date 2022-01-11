@@ -83,6 +83,15 @@
                  color: orange;
              }
            }
+           .upload_download{
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+               a{
+                padding: 0 1vw;
+                color:rgb(85,26,139);
+               }
+           }
         }
     }
 }

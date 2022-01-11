@@ -91,3 +91,14 @@
   margin: 0 10px;
   color: orange;
 }
+
+.read .right .table-title .upload_download {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.read .right .table-title .upload_download a {
+  padding: 0 1vw;
+  color: #551a8b;
+}

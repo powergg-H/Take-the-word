@@ -40,15 +40,13 @@ const Home = () => {
                         type: "UPLOAD_FILE",
                         payload: {
                             file: this.result,
-                            dictionaries: res.data.data,
+                            dictionaries: res.data,
                             isPDF,
                         },
 
                     })
-                    localStorage.setItem("files", JSON.stringify(this.result))
                     setVisible(false);
-                    window.localStorage.setItem("pdf", JSON.stringify(res.data.data))
-                    navigate("/read", { state: { isPDF, mark: res.data.mark,keyword_count:res.data.keyword_count } })
+                    navigate("/read")
                 }
 
             }
