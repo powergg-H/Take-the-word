@@ -93,5 +93,63 @@
                }
            }
         }
+        .countKey { //表格count列内容样式
+            display: flex;
+            align-items: center;
+            width:100%;
+            >.countVal{
+               padding: 0 10%;
+            }
+           .el-icon-caret-top{
+                display: flex;
+                height: 100%;
+                height: 100%;
+                width:2vw;
+                color: #ccc;
+                &:hover{
+                    color: rgb(31, 31, 247);
+                }
+           }
+           .el-icon-caret-bottom{
+            display: flex;
+            height: 100%;
+            height: 100%;
+            width:2vw;
+            color: #ccc;
+            &:hover{
+                color: rgb(31, 31, 247);
+            }
+           }
+        }
+    }
+
+    .fontColor{ //被标记文字的颜色
+        color: #000;
+        background: #ccc;
+    }
+
+
+    
+}
+.box {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .box-top{
+     height: 40vh;
+     
+    }
+    .history{
+        flex:1;
+        overflow-y: scroll;
+    }
+}
+.msg{
+    z-index: 99999 !important;
+}
+
+.history{
+    .el-tree{
+        width:110%
     }
 }

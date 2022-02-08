@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Loading, Upload,Message } from "element-react";
@@ -8,6 +8,13 @@ const Home = () => {
     const [visible, setVisible] = useState(false)
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+     // 副作用
+     useEffect(()=>{
+        axios({
+            url:"/api/cache/",
+        })
+    },[])
     const handleUploadBefore =(files )=>{
         if (!files) {
             return false

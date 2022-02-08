@@ -102,3 +102,65 @@
   padding: 0 1vw;
   color: #551a8b;
 }
+
+.read .right .countKey {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.read .right .countKey > .countVal {
+  padding: 0 10%;
+}
+
+.read .right .countKey .el-icon-caret-top {
+  display: flex;
+  height: 100%;
+  height: 100%;
+  width: 2vw;
+  color: #ccc;
+}
+
+.read .right .countKey .el-icon-caret-top:hover {
+  color: #1f1ff7;
+}
+
+.read .right .countKey .el-icon-caret-bottom {
+  display: flex;
+  height: 100%;
+  height: 100%;
+  width: 2vw;
+  color: #ccc;
+}
+
+.read .right .countKey .el-icon-caret-bottom:hover {
+  color: #1f1ff7;
+}
+
+.read .fontColor {
+  color: #000;
+  background: #ccc;
+}
+
+.box {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.box .box-top {
+  height: 40vh;
+}
+
+.box .history {
+  flex: 1;
+  overflow-y: scroll;
+}
+
+.msg {
+  z-index: 99999 !important;
+}
+
+.history .el-tree {
+  width: 110%;
+}
