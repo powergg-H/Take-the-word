@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
+import axios from "@/utils/request";
 import Lazy from "@/components/LazyLoad"
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import "./index.css";
@@ -78,11 +78,6 @@ const Read = () => {
     }, [pdfData, activeIndex, count, showCount])
 
 
-    //副作用
-    useEffect(() => {
-        
-
-    }, [])
     const posWord = (content, data) => { //定位文字
         const index = data.findIndex((item) => item.key.includes(content.trim()));
         if (index) {
@@ -148,7 +143,7 @@ const Read = () => {
 
     const handleExport = (value) => {
         axios({
-            url: `/api/export/${pk}/`,
+            url: `/api/match/export/${pk}/`,
             params: {
                 pk,
                 file_type: value
@@ -209,7 +204,7 @@ const Read = () => {
                         scrollDom = document.querySelector(".react-pdf__Document");//需要滚动的元素节点
                     } else {
                         const noPdfDoms = [...document.querySelectorAll("#docx .document-container p")];
-                        doms = handleGetTextNode(noPdfDoms);
+                        doms = handleGetTextNode(noPdfDoms).reverse();
                         scrollDom = document.querySelector(".pg-viewer-wrapper");
                     }
                     setTextDom(doms); //更新dom
@@ -298,7 +293,7 @@ const Read = () => {
         formData.append("file", files);
         setLoading(true)
         axios({
-            url: "/api/parser/",
+            url: "/api/match/parser/",
             method: "post",
             data: formData,
         }).then(res => {
@@ -415,7 +410,7 @@ const Read = () => {
                             accept=".docx,.pdf"
                             showFileList={false}
                         >
-                            <a onClick={(e) => { e.preventDefault() }}><UploadOutlined /></a>
+                            <a onClick={(e) => { e.preventDefault() }} title="upload"><UploadOutlined /></a>
                         </Upload>
                         <Dropdown trigger="click" onCommand={handleExport} menu={(
                             <Dropdown.Menu>

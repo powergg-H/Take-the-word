@@ -1,20 +1,21 @@
+/*
+ * @Author: Zhang Huan
+ * @Date: 2022-01-04 16:07:37
+ * @LastEditors: Zhang Huan
+ * @LastEditTime: 2022-03-06 14:49:02
+ * @Description: file content
+ * @FilePath: \screen-word-selection\src\pages\Home\index.jsx
+ */
 import React, { useState,useEffect } from 'react';
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Loading, Upload,Message } from "element-react";
-import axios from "axios";
+import axios from "@/utils/request";
 import "./index.css"
 const Home = () => {
     const [visible, setVisible] = useState(false)
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-     // 副作用
-     useEffect(()=>{
-        axios({
-            url:"/api/cache/",
-        })
-    },[])
     const handleUploadBefore =(files )=>{
         if (!files) {
             return false
@@ -33,7 +34,7 @@ const Home = () => {
         const formData = new FormData();
         formData.append("file", files);
         axios({
-            url: "/api/parser/",
+            url: "/api/match/parser/",
             method: "post",
             data: formData,
         }).then(res => {
@@ -56,6 +57,9 @@ const Home = () => {
                     navigate("/read")
                 }
 
+            }
+            if(res.data.code === 204){
+                return Message.error(res.data.msg);
             }
             return false
         }).catch(res => {

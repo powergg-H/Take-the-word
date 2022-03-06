@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useMemo, memo, useState } from 'react';
 import { Drawer } from 'antd';
 import "antd/dist/antd.css";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
-import { Message, Tree, Button, Collapse, Layout } from "element-react";
+import axios from "@/utils/request";
+import { Message, Tree, Button, Collapse, Input } from "element-react";
 const formatKey = {
     key: "key",    //树形控件的key值
     formatKey: "is_select",//需要根据什么字段进行格式化
@@ -11,7 +11,9 @@ const formatKey = {
 const Drawers = memo((props) => {
     const { visible, onClose, data, dataLog, loading } = props;
     const [activeName, setActiveName] = useState("");//标签历史当前展开项
+    const [note,setNote] =useState("");//笔记value
     const { pk, } = useSelector((state) => state.pdfData);
+    const sdg_count = useSelector((state) => state.sdg_count)
     const dispatch = useDispatch();
     const treeRef = useRef(null);
     useEffect(() => {
@@ -23,9 +25,10 @@ const Drawers = memo((props) => {
     }
     const handleSubmit = () => { //提交按钮
         axios({
-            url: `/api/label/${pk}/`,
+            url: `/api/match/label/${pk}/`,
             data: {
                 result: data,
+                note
             },
             method: "post"
         }).then(res => {
@@ -46,6 +49,9 @@ const Drawers = memo((props) => {
     const handleHistory = (activeName) => { //激活标签历史
         setActiveName(activeName[0])
     }
+    const handleSetNote =(value)=>{
+          setNote(value);
+    }
     const renderLogHistory = useMemo(() => {
         return <Collapse accordion onChange={handleHistory} value={activeName}>
             {
@@ -55,6 +61,7 @@ const Drawers = memo((props) => {
                             <span style={{ padding: '0 10%' }}>
                                 <span style={{ marginRight: '10%' }}>{item.username}</span>
                                 <span>{item.create_datetime}</span>
+                                <span>{item.note}</span>
                             </span>
                         }
                         name={String(index)}
@@ -86,7 +93,7 @@ const Drawers = memo((props) => {
     }, [dataLog.length, activeName])
 
     return <Drawer
-        title="SDG count"
+        title={<div>SDG count:   <span>keywords appear <span style={{ color: "red" }}>{sdg_count}</span> times</span> </div>}
         placement="left"
         onClose={onClose}
         visible={visible}
@@ -115,7 +122,14 @@ const Drawers = memo((props) => {
 
 
 
-                <div style={{marginTop:'5%'}}>
+                <div style={{ marginTop: '5%' }}>
+                    <Input
+                        type="textarea"
+                        autosize={{ minRows: 1, maxRows: 1 }}
+                        placeholder="note"
+                        onChange={handleSetNote}
+                        value={note}
+                    />
                     <Button onClick={handleSubmit} type="primary" >Submit</Button>
                 </div>
 
@@ -149,8 +163,8 @@ function formatData(dataList) {
         if (item[formatKey.formatKey]) {
             arr.push(item[formatKey.key])
         } else {
-            if(item.children){
-                arr=arr.concat(formatData(item.children))
+            if (item.children) {
+                arr = arr.concat(formatData(item.children))
             }
         }
 

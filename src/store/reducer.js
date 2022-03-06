@@ -2,7 +2,7 @@
  * @Author: Zhang Huan
  * @Date: 2021-12-18 12:10:10
  * @LastEditors: Zhang Huan
- * @LastEditTime: 2022-01-13 16:20:05
+ * @LastEditTime: 2022-03-06 13:35:07
  * @Description: file content
  * @FilePath: \screen-word-selection\src\store\reducer.js
  */
@@ -16,7 +16,8 @@ const initState = JSON.parse(localStorage.getItem("pdfStore")) ||
     },
     isPDF: true,
     historyData:[],
-    historyDataLog:[]
+    historyDataLog:[],
+    sdg_count:0,
 }
 
 
@@ -43,7 +44,8 @@ const reducer = (state = initState, action) => {
                 pdfData: [...state.pdfData]
             }
         case "ADD_HISTORYDATA":
-            state.historyData =payload;
+            state.historyData =payload.labels;
+            state.sdg_count=payload.sdg_count
             return {
                 ...state
             }
@@ -52,6 +54,7 @@ const reducer = (state = initState, action) => {
             return {
                 ...state
             }
+        
         default:
             return state
     }
