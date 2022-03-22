@@ -2,7 +2,7 @@
  * @Author: Zhang Huan
  * @Date: 2022-03-05 12:01:22
  * @LastEditors: Zhang Huan
- * @LastEditTime: 2022-03-05 13:29:08
+ * @LastEditTime: 2022-03-06 21:42:51
  * @Description: 获取和设置cookie
  * @FilePath: \screen-word-selection\src\utils\cookie.js
  */
@@ -24,7 +24,7 @@ export const getCookie =(key)=>{
  * 
  */
 export const setCookie =(options)=>{
-   const {time=0,...rest} =options;
+   const {time=1440,...rest} =options;
    const date = new Date();
    date.setMinutes(date.getMinutes()+time)
    Object.keys(rest).forEach( item=>{

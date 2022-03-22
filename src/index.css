@@ -11,5 +11,13 @@ html,body,#root,.App{
 .App{
   display: flex;
   flex-direction: column;
-
+  
+}
+.header{
+  height: 5vh;
+}
+.ant-affix{
+  display: flex;
+    justify-content: flex-end;
+    padding: 0 1%;
 }

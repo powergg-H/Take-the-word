@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useMemo, memo, useState } from 'react';
 import { Drawer } from 'antd';
-import "antd/dist/antd.css";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "@/utils/request";
 import { Message, Tree, Button, Collapse, Input } from "element-react";
@@ -60,8 +59,8 @@ const Drawers = memo((props) => {
                         title={
                             <span style={{ padding: '0 10%' }}>
                                 <span style={{ marginRight: '10%' }}>{item.username}</span>
-                                <span>{item.create_datetime}</span>
-                                <span>{item.note}</span>
+                                <span style={{ marginRight: '10%' }}>{item.create_datetime}</span>
+                                <span >{item.note}</span>
                             </span>
                         }
                         name={String(index)}

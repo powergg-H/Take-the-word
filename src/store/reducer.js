@@ -2,7 +2,7 @@
  * @Author: Zhang Huan
  * @Date: 2021-12-18 12:10:10
  * @LastEditors: Zhang Huan
- * @LastEditTime: 2022-03-06 13:35:07
+ * @LastEditTime: 2022-03-13 20:39:21
  * @Description: file content
  * @FilePath: \screen-word-selection\src\store\reducer.js
  */
@@ -34,14 +34,16 @@ const reducer = (state = initState, action) => {
             return { ...state }
         case "SORT_DATA":
             const { key, type } = payload;
+            const {data} =state.pdfData;
             if (key === "key") {
-                state.pdfData.sort((a, b) => type === "ascending" ? a[key].localeCompare(b[key]) : b[key].localeCompare(a[key]));
+                data.sort((a, b) => type === "ascending" ? a[key].localeCompare(b[key]) : b[key].localeCompare(a[key]));
             } else {
-                state.pdfData.sort((a, b) => type === "ascending" ? a[key] - b[key] : b[key] - a[key]);
+                data.sort((a, b) => type === "ascending" ? a[key] - b[key] : b[key] - a[key]);
             }
+            state.pdfData.data=[...data]
             return {
                 ...state,
-                pdfData: [...state.pdfData]
+                pdfData: {...state.pdfData}
             }
         case "ADD_HISTORYDATA":
             state.historyData =payload.labels;

@@ -2,12 +2,11 @@
  * @Author: Zhang Huan
  * @Date: 2022-03-03 16:37:04
  * @LastEditors: Zhang Huan
- * @LastEditTime: 2022-03-05 21:08:06
+ * @LastEditTime: 2022-03-06 23:32:43
  * @Description: file content
  * @FilePath: \screen-word-selection\src\pages\Login\index.jsx
  */
-import { Form, Input, Button } from 'antd';
-import "antd/dist/antd.css";
+import { Form, Input, Button, message } from 'antd';
 import "./index.css";
 import { getLogin } from "@/API";
 import { setCookie } from "@/utils/cookie.js"
@@ -19,11 +18,15 @@ const Login = () => {
     const navigate = useNavigate();
     const onFinish = (values) => {//登录
         getLogin(values).then(res => {
-            setCookie({
-                token: res.data.token, //设置cookie
-                time: 30, //时效30分钟
-            })
-            window.location.pathname = "/"
+            const { code, msg, data } = res.data;
+            if (code === 200) {
+                setCookie({
+                    token: data.token, //设置cookie
+                })
+               return  window.location.pathname = "/"
+            }
+            return message.error(msg)
+
         })
     };
 

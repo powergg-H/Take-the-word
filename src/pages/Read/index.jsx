@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react'
+import React, { useState, useMemo, useCallback } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import axios from "@/utils/request";
 import Lazy from "@/components/LazyLoad"
@@ -9,7 +9,6 @@ import Tip from "./components/Tip";
 import { Table, Button, Form, Card, Message, Dropdown, Upload, Loading } from "element-react";
 import { Resizable } from "re-resizable";
 import { DownloadOutlined, UploadOutlined } from "@ant-design/icons";
-import "antd/dist/antd.css";
 import {getBabel,getBabelHistory} from "@/API";
 const FileViewer = Lazy(() => import("react-file-viewer"));
 const Drawers = Lazy(() => import("@/pages/Read/components/Drawer.jsx"));
@@ -315,6 +314,9 @@ const Read = () => {
                 }
 
             }
+            if(res.data.code === 204){
+                return Message.error(res.data.msg);
+            }
             return false
         }).catch(res => {
             Message.error("Loading fail");
@@ -397,8 +399,8 @@ const Read = () => {
             <Card style={{ height: '100%' }}>
                 <div className="table-title">
                     <div className="title-left">
-                        keyword_count
-                        <span>{keyword_count}</span>
+                        find <span>{keyword_count}</span> unique keywords
+                        
                     </div>
 
                     <Button onClick={handleOpenHistory} size="small">SDG count</Button>

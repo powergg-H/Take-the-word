@@ -2,12 +2,11 @@
  * @Author: Zhang Huan
  * @Date: 2022-03-03 16:37:04
  * @LastEditors: Zhang Huan
- * @LastEditTime: 2022-03-05 21:07:45
+ * @LastEditTime: 2022-03-06 23:32:54
  * @Description: file content
  * @FilePath: \screen-word-selection\src\pages\Reg\index.jsx
  */
 import { Form, Input, Button, Checkbox, message } from 'antd';
-import "antd/dist/antd.css";
 import "./index.css";
 import { getReg } from "@/API/index.js";
 import { setCookie } from "@/utils/cookie.js"
@@ -19,7 +18,6 @@ const Reg = () => {
                 message.success("success");
                 setCookie({
                     token: res.data.data.token, //设置cookie
-                    time: 30, //时效30分钟
                 })
                 window.location.pathname = "/"
             }

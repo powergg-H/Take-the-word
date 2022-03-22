@@ -2,16 +2,16 @@
  * @Author: Zhang Huan
  * @Date: 2022-01-04 16:07:37
  * @LastEditors: Zhang Huan
- * @LastEditTime: 2022-03-06 14:49:02
+ * @LastEditTime: 2022-03-06 23:54:44
  * @Description: file content
  * @FilePath: \screen-word-selection\src\pages\Home\index.jsx
  */
-import React, { useState,useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Loading, Upload,Message } from "element-react";
 import axios from "@/utils/request";
-import "./index.css"
+import "./index.css";
 const Home = () => {
     const [visible, setVisible] = useState(false)
     const dispatch = useDispatch();
@@ -59,6 +59,7 @@ const Home = () => {
 
             }
             if(res.data.code === 204){
+                setVisible(false);
                 return Message.error(res.data.msg);
             }
             return false
