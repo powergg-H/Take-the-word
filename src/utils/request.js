@@ -8,7 +8,7 @@
  */
 
 import axios from "axios"; 
-import {getCookie} from "@/utils/cookie";
+import {getCookie,setCookie} from "@/utils/cookie";
 import { message } from 'antd';
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
@@ -26,6 +26,7 @@ axios.interceptors.response.use(function (response) {
     const {code} = response.data;
     if(code===401){
        message.warning("log in again");
+       setCookie({token:"",time:0})
        window.location.pathname="/login";
     }
     return response;

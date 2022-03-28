@@ -9,19 +9,21 @@
 import { Form, Input, Button, Checkbox, message } from 'antd';
 import "./index.css";
 import { getReg } from "@/API/index.js";
-import { setCookie } from "@/utils/cookie.js"
+import { setCookie } from "@/utils/cookie.js";
+import { useNavigate } from "react-router-dom";
 const Reg = () => {
+    const navigate = useNavigate();
     const onFinish = (values) => {
         getReg(values).then(res => {
-            const { code } = res.data;
+            const { code,errors } = res.data;
             if (code === 200) {
                 message.success("success");
                 setCookie({
                     token: res.data.data.token, //设置cookie
                 })
-                window.location.pathname = "/"
+                return navigate("/")
             }
-            return  message.error("error");
+            return  message.error(errors.username);
         })
     };
     const onFinishFailed = (errorInfo) => {

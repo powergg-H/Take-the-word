@@ -76,7 +76,6 @@ const Read = () => {
         ]
     }, [pdfData, activeIndex, count, showCount])
 
-
     const posWord = (content, data) => { //定位文字
         const index = data.findIndex((item) => item.key.includes(content.trim()));
         if (index) {
@@ -187,6 +186,7 @@ const Read = () => {
             const colorClassList = [...document.querySelectorAll(".pdf-box .fontColor")];
             colorClassList.forEach(item => item.classList.remove("fontColor"));
             //如果hightSpan对象里找到对应的属性，则代表用户已经点击过当前字段
+            
             if (hightSpan[currentRow.key]) {
                 hightSpan[currentRow.key].forEach(item => item.classList.add("fontColor"))
             } else {
@@ -195,15 +195,16 @@ const Read = () => {
                 * 用户读取的pdf与docx生成的页面元素不同，因此需要判断分别获取
                  */
                 let doms = textDoms;
-
                 if (!textDoms) { //页面所有的文本还未更新
                     if (isPDF) { //若果读取的是pdf文件
                         const pdfDom = [...document.querySelectorAll(".react-pdf__Page__textContent span")]; // 所有带有文本的节点
+                        
                         doms = pdfDom.map(item => item.childNodes.length ? item.childNodes[0] : item);
+                        
                         scrollDom = document.querySelector(".react-pdf__Document");//需要滚动的元素节点
                     } else {
                         const noPdfDoms = [...document.querySelectorAll("#docx .document-container p")];
-                        doms = handleGetTextNode(noPdfDoms).reverse();
+                        doms = handleGetTextNode(noPdfDoms);
                         scrollDom = document.querySelector(".pg-viewer-wrapper");
                     }
                     setTextDom(doms); //更新dom
@@ -211,11 +212,11 @@ const Read = () => {
                 }
                 //将符合条件的文本先过滤出来
                 const result = doms.filter(item => item.textContent.search(reg) !== -1);
+           
                 if (!result.length) return;
                 /**
                  * 匹配的文字全部选中效果
                  */
-
                 result.forEach(item => {
                     const startIndex = item.textContent.search(reg);
                     const endIndex = startIndex + currentRow.key.trim().length;
@@ -227,10 +228,14 @@ const Read = () => {
                     //创建新节点
                     const spans = document.createElement("span");
                     spans.classList.add("fontColor");
+                    spans.classList.add(currentRow.key.trim());
                     spans.innerHTML = fragment.textContent;
                     range.insertNode(spans);
                     spansList.push(spans);
                 })
+                if(!isPDF){  //如果读取的是docx文件，需要重新获取dom，防止顺序错乱
+                    spansList = [...document.querySelectorAll(`.${currentRow.key.trim()}`)]
+                }
                 setHightSpan({ ...hightSpan, [currentRow.key]: spansList });
             }
             /**
@@ -239,6 +244,7 @@ const Read = () => {
              * 2. 还未到达                         ---count+1                   
              */
             let newCount = isAlignClick ? count < spansList.length ? count : 0 : 0;
+            console.log(spansList,"spansList")
             const textNode = spansList[newCount];
             range.selectNodeContents(textNode);
             scrollDom.scrollTo(0, 0);  // 现将滚动条回复初始状态，否则接下来的高度获取的会出现偏差
@@ -310,7 +316,16 @@ const Read = () => {
                             isPDF,
                         },
                     })
+                    //上传后初始化数据
                     setLoading(false)
+                    setHightSpan({})
+                    setAlign("")
+                    setCount(0)
+                    setShowCount(false)
+                    setTipShow(false);
+                    setActiveIndex(-1);
+                    setTextDom(null); //更新dom
+                    setScrollDomTar(null); //更新滚动元素
                 }
 
             }
